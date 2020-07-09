@@ -10,17 +10,17 @@ import android.widget.LinearLayout
 import android.widget.TextView
 
 
-class CustomAdapter(context: Context,arrayListDetails:ArrayList<Model>) : BaseAdapter(){
+class CustomAdapter(context: Context,arrayLd:ArrayList<Model>) : BaseAdapter(){
 
     private val layoutInflater: LayoutInflater = LayoutInflater.from(context)
-    private val arrayListDetails:ArrayList<Model> = arrayListDetails
+    private val arrayLd:ArrayList<Model> = arrayLd
 
     override fun getCount(): Int {
-        return arrayListDetails.size
+        return arrayLd.size
     }
 
     override fun getItem(position: Int): Any {
-        return arrayListDetails.get(position)
+        return arrayLd.get(position)
     }
 
     override fun getItemId(position: Int): Long {
@@ -39,17 +39,18 @@ class CustomAdapter(context: Context,arrayListDetails:ArrayList<Model>) : BaseAd
             listRowHolder = view.tag as ListRowHolder
         }
 
-        listRowHolder.tvDesc.text = arrayListDetails.get(position).desc
-        //listRowHolder.tvImg.text = arrayListDetails.get(position).img
-        listRowHolder.tvTitle.text = arrayListDetails.get(position).title
+        listRowHolder.tvDesc.text = arrayLd[position].desc
+        //listRowHolder.tvImg.text = arrayLd.get(position).img
+        listRowHolder.tvTitle.text = arrayLd[position].title
         return view
     }
 }
 
 private class ListRowHolder(row: View?) {
     public val tvDesc: TextView = row?.findViewById<TextView>(R.id.tvDesc) as TextView
-    public val tvImg: ImageView = row?.findViewById<ImageView>(R.id.tvImg) as ImageView
+    //public val tvImg: ImageView = row?.findViewById<ImageView>(R.id.tvImg) as ImageView
     public val tvTitle: TextView = row?.findViewById<TextView>(R.id.tvTitle) as TextView
     public val linearLayout: LinearLayout = row?.findViewById<LinearLayout>(R.id.linearLayout) as LinearLayout
 
 }
+

@@ -13,8 +13,8 @@ import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
     lateinit var progress:ProgressBar
-    lateinit var listView_details: ListView
-    var arrayList_details:ArrayList<Model> = ArrayList();
+    lateinit var lvd: ListView
+    var arrayLd:ArrayList<Model> = ArrayList();
     //OkHttpClient creates connection pool between client and server
     val client = OkHttpClient()
 
@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         progress = findViewById(R.id.progressBar)
         progress.visibility = View.VISIBLE
-        listView_details = findViewById<ListView>(R.id.listView) as ListView
+        lvd = findViewById<ListView>(R.id.listView) as ListView
         run("https://dl.dropboxusercontent.com/s/2iodh4vg0eortkl/facts.json")
     }
 
@@ -41,29 +41,29 @@ class MainActivity : AppCompatActivity() {
 
             override fun onResponse(call: Call, response: Response) {
                 println("in onResponse")
-                var str_response = response.body()!!.string()
+                var jresponse = response.body()!!.string()
                 println("before comment /creating json object/")
                 //creating json object
-                val json_contact:JSONObject = JSONObject(str_response)
-                println("Created JSON object $json_contact")
+                val jcontact:JSONObject = JSONObject(jresponse)
+                println("Created JSON object $jcontact")
                 //creating json array
-                var jsonarray_info:JSONArray= json_contact.getJSONArray("rows")
+                var jsonarray:JSONArray= jcontact.getJSONArray("rows")
                 var i:Int = 0
-                var size:Int = jsonarray_info.length()
-                arrayList_details= ArrayList();
-                for (i in 0.. size-1) {
-                    var json_objectdetail:JSONObject=jsonarray_info.getJSONObject(i)
-                    var model:Model= Model();
-                    model.title=json_objectdetail.getString("title")
-                    model.desc=json_objectdetail.getString("description")
-                    model.img=json_objectdetail.getString("imageHref")
-                    arrayList_details.add(model)
+                var size:Int = jsonarray.length()
+                arrayLd= ArrayList();
+                for (i in 0 until size) {
+                    var jsonobject:JSONObject=jsonarray.getJSONObject(i)
+                    var model:Model= Model()
+                    model.title=jsonobject.getString("title")
+                    model.desc=jsonobject.getString("description")
+                    model.img=jsonobject.getString("imageHref")
+                    arrayLd.add(model)
                 }
 
                 runOnUiThread {
                     //stuff that updates ui
-                    val obj_adapter : CustomAdapter = CustomAdapter(applicationContext,arrayList_details)
-                    listView_details.adapter=obj_adapter
+                    val adapterobj : CustomAdapter = CustomAdapter(applicationContext,arrayLd)
+                    lvd.adapter=adapterobj
                 }
                 progress.visibility = View.GONE
             }
